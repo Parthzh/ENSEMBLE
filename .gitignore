@@ -1,0 +1,34 @@
+# Datasets & Heavy Files
+Dataset/
+Dataset_Augmented/
+Dataset_Raw_Original/
+*.zip
+laya_production_model.zip
+laya_finetuned_rice/
+laya/
+
+# Testing & Junk Scripts
+app.py
+test_laya_model.py
+generate_confusion_matrices.py
+prepare_laya_dataset.py
+*.jsonl
+cm_*.png
+create_backup.py
+
+# Context files
+conversation_context.md
+backup_context_*.md
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+venv/
+.venv/
+
+# Node
+frontend/node_modules/
+frontend/.next/
+frontend/out/
