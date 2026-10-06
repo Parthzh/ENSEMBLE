@@ -1,0 +1,24 @@
+# Ignore datasets and heavy zip files
+Dataset/
+Dataset_Augmented/
+Dataset_Raw_Original/
+*.zip
+laya_production_model.zip
+
+# Ignore frontend node_modules and builds
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Ignore local environment
+.env
+.venv
+venv/
+
+# Streamlit config
+.streamlit/
