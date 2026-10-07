@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rice Grain Classifier — Semester Project Plan (Updated)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #2d3a2e;
+            background: #fff;
+            line-height: 1.65;
+            font-size: 11pt;
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        @media print {
+            body { margin: 0; padding: 0; }
+            .page-break { page-break-before: always; }
+            .no-break { page-break-inside: avoid; }
+        }
+
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #f8fdf6 0%, #edf5e8 50%, #e2eed8 100%);
+            border-bottom: 4px solid #5a7d5f;
+        }
+        .cover-icon { font-size: 64px; margin-bottom: 20px; }
+        .cover h1 { font-size: 32pt; font-weight: 800; color: #2d3a2e; letter-spacing: -0.5px; margin-bottom: 8px; }
+        .cover h2 { font-size: 14pt; font-weight: 400; color: #5a7d5f; margin-bottom: 30px; }
+        .cover-meta { display: flex; gap: 24px; font-size: 10pt; color: #777; margin-top: 10px; }
+        .cover-meta span { background: #fff; padding: 6px 16px; border-radius: 20px; border: 1px solid #d4e0d0; }
+        .cover .updated-badge { margin-top: 24px; background: #5a7d5f; color: #fff; padding: 8px 24px; border-radius: 6px; font-size: 10pt; font-weight: 600; }
+
+        .section { padding: 50px 50px; }
+        .section h2 { font-size: 16pt; font-weight: 700; color: #2d3a2e; margin-bottom: 6px; padding-bottom: 8px; border-bottom: 2px solid #5a7d5f; }
+        .section h3 { font-size: 12pt; font-weight: 600; color: #3d6b42; margin: 18px 0 8px 0; }
+        .section p { margin-bottom: 10px; color: #444; }
+
+        table { width: 100%; border-collapse: collapse; margin: 12px 0 18px 0; font-size: 10pt; }
+        thead th { background: #5a7d5f; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; font-size: 9pt; text-transform: uppercase; letter-spacing: 0.3px; }
+        tbody td { padding: 7px 12px; border-bottom: 1px solid #e8e4dc; color: #444; }
+        tbody tr:nth-child(even) { background: #faf8f5; }
+
+        .info-box { background: #f2f7f0; border-left: 4px solid #5a7d5f; padding: 12px 16px; margin: 14px 0; border-radius: 0 6px 6px 0; font-size: 10pt; color: #3d6b42; }
+        .info-box.warning { background: #fef9ec; border-left-color: #c9a84c; color: #8a7a55; }
+        .info-box.progress { background: #eef6ff; border-left-color: #4a7db8; color: #3a5f8a; }
+
+        .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 8.5pt; font-weight: 600; }
+        .badge-done { background: #e8f0e6; color: #3d6b42; }
+        .badge-progress { background: #eef6ff; color: #4a7db8; }
+        .badge-todo { background: #f5f0e8; color: #8a7a55; }
+
+        .result-card { background: #faf8f5; border: 1px solid #e0ddd7; border-radius: 10px; padding: 20px; margin: 16px 0; max-width: 380px; }
+        .result-card h4 { font-size: 9pt; color: #999; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .result-card .variety { font-size: 20pt; font-weight: 800; color: #2d3a2e; }
+        .result-card .conf { color: #5a7d5f; font-weight: 600; font-size: 12pt; }
+        .result-card .measurements { margin-top: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+        .result-card .meas-item { display: flex; justify-content: space-between; font-size: 9pt; padding: 3px 0; border-bottom: 1px solid #eee; }
+        .result-card .meas-label { color: #999; }
+        .result-card .meas-val { color: #333; font-weight: 500; }
+
+        .flow { font-family: 'Courier New', monospace; font-size: 9pt; background: #faf8f5; border: 1px solid #e0ddd7; border-radius: 8px; padding: 16px 20px; margin: 12px 0; white-space: pre; line-height: 1.5; overflow-x: auto; }
+
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 14px 0; }
+        .col-box { background: #fff; border: 1px solid #e0ddd7; border-radius: 8px; padding: 16px; }
+        .col-box h4 { font-size: 10pt; font-weight: 600; color: #5a7d5f; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
+        .col-box p, .col-box li { font-size: 10pt; color: #555; }
+        .col-box ul { padding-left: 18px; margin-top: 4px; }
+        .col-box li { margin-bottom: 3px; }
+
+        ol.steps { padding-left: 20px; }
+        ol.steps li { margin-bottom: 8px; color: #444; }
+        ol.steps li strong { color: #2d3a2e; }
+
+        .page-footer { text-align: center; font-size: 8pt; color: #bbb; padding: 20px 0 10px 0; }
+    </style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="cover">
+    <div class="cover-icon">🌾</div>
+    <h1>Rice Grain Classifier</h1>
+    <h2>Semester Project Plan</h2>
+    <div class="cover-meta">
+        <span>5-Member Team</span>
+        <span>14-Week Semester</span>
+        <span>2nd Year Project</span>
+    </div>
+    <div class="cover-meta" style="margin-top: 12px;">
+        <span>4 Parameters: Size · Shape · Color · Texture</span>
+    </div>
+    <div class="updated-badge">✅ Updated — August 2026 · Reflects current project progress</div>
+</div>
+
+<!-- SECTION 1 -->
+<div class="section page-break">
+    <h2>1 &nbsp; What Are We Building?</h2>
+    <p>We are building a smart app that can look at a photo of a rice grain and tell you:</p>
+    <ol class="steps">
+        <li><strong>What variety</strong> of rice it is (Arborio, Basmati, Ipsala, Jasmine, or Karacadag)</li>
+        <li><strong>How confident</strong> it is about its answer (e.g., "96% sure it's Basmati")</li>
+        <li><strong>Physical details</strong> about the grain — its <strong>size, shape, color, and texture</strong></li>
+    </ol>
+    <p>Think of it like Shazam, but for rice. You upload a photo, the app analyzes it, and gives you a full report.</p>
+
+    <h3>Why Does This Matter?</h3>
+    <p>Right now, rice grading is done by hand — people sit and visually inspect thousands of grains. This is slow, inconsistent (different people may grade the same grain differently), and expensive. Our app does the same job in seconds, and it never gets tired or inconsistent. This has real-world value in the food and agriculture industry.</p>
+
+    <div class="info-box progress">
+        <strong>Current Status:</strong> Working Streamlit prototype at <code>localhost:8503</code> with real-time OpenCV image processing pipeline. Classification currently uses rule-based placeholder — will be replaced with trained models.
+    </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section page-break">
+    <h2>2 &nbsp; Our Dataset</h2>
+    <p>We're using a free, publicly available dataset from Kaggle.</p>
+
+    <table>
+        <thead><tr><th>Attribute</th><th>Details</th></tr></thead>
+        <tbody>
+            <tr><td>Name</td><td>Rice Image Dataset (by Murat Koklu)</td></tr>
+            <tr><td>Source</td><td>kaggle.com/datasets/muratkokludataset/rice-image-dataset</td></tr>
+            <tr><td>Total Images</td><td>75,000 photos of rice grains</td></tr>
+            <tr><td>Rice Varieties</td><td>5 types: Arborio, Basmati, Ipsala, Jasmine, Karacadag</td></tr>
+            <tr><td>Per Variety</td><td>15,000 images each (perfectly balanced)</td></tr>
+            <tr><td>Image Size</td><td>250 × 250 pixels, white background</td></tr>
+            <tr><td>Bonus File</td><td>106 pre-calculated features (size, shape, color) + our texture features</td></tr>
+        </tbody>
+    </table>
+
+    <h3>What's in the Features?</h3>
+    <table>
+        <thead><tr><th>Category</th><th>Count</th><th>What It Includes</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Size</strong></td><td>12 features</td><td>Area, perimeter, grain length, grain width, etc.</td></tr>
+            <tr><td><strong>Shape</strong></td><td>4 features</td><td>How round or elongated, aspect ratio, etc.</td></tr>
+            <tr><td><strong>Color</strong></td><td>90 features</td><td>Avg redness, greenness, blueness, brightness, etc.</td></tr>
+            <tr><td><strong>Texture</strong></td><td>2 features</td><td>Laplacian standard deviation, roughness label</td></tr>
+        </tbody>
+        <tfoot><tr style="border-top: 2px solid #5a7d5f;"><td><strong>Total</strong></td><td><strong>108 features</strong></td><td>Used by Classical ML models</td></tr></tfoot>
+    </table>
+
+    <div class="info-box">
+        <strong>Update:</strong> The original dataset provides 106 features (size + shape + color). We added 2 texture features ourselves via our OpenCV pipeline using Laplacian edge analysis, bringing the total to <strong>108</strong>.
+    </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section page-break">
+    <h2>3 &nbsp; The 4 Parameters We Analyze</h2>
+    <p>When we analyze a rice grain, we look at <strong>4 physical characteristics</strong>:</p>
+
+    <h3>1. Size — How big is the grain?</h3>
+    <p><strong>What we measure:</strong> Length, Width, Area, Perimeter. Measured in pixels.<br>
+    <strong>Why it matters:</strong> Basmati rice is long, while Arborio is short and fat.</p>
+
+    <h3>2. Shape — What's the grain's overall shape?</h3>
+    <table>
+        <thead><tr><th>L/W Ratio</th><th>Shape Label</th><th>Example Variety</th></tr></thead>
+        <tbody>
+            <tr><td>More than 3.0</td><td>Long Slender</td><td>Basmati</td></tr>
+            <tr><td>2.1 to 3.0</td><td>Medium</td><td>Jasmine</td></tr>
+            <tr><td>1.1 to 2.0</td><td>Bold</td><td>Arborio</td></tr>
+            <tr><td>1.0 or less</td><td>Round</td><td>Karacadag</td></tr>
+        </tbody>
+    </table>
+    <p>We also measure <strong>circularity</strong> and <strong>solidity</strong>.</p>
+
+    <h3>3. Color — What color is the grain?</h3>
+    <p>Average RGB values from the masked grain region. Labels: White, Creamy, Tan, or Brown.</p>
+
+    <h3>4. Texture — How smooth or rough is the surface?</h3>
+    <p>We apply a <strong>Laplacian filter</strong> (edge-detection) to the grain surface and calculate the standard deviation.</p>
+    <table>
+        <thead><tr><th>Texture Std Dev</th><th>Label</th><th>Interpretation</th></tr></thead>
+        <tbody>
+            <tr><td>Greater than 10</td><td>Rough</td><td>More surface variation</td></tr>
+            <tr><td>10 or less</td><td>Smooth</td><td>Uniform surface — polished rice</td></tr>
+        </tbody>
+    </table>
+
+    <div class="info-box">
+        <strong>New:</strong> Texture is our 4th parameter. The original plan covered only 3. Texture analysis uses the Laplacian operator from OpenCV — a well-established method for measuring surface variation.
+    </div>
+
+    <h3>Why Pixels and Not Millimeters?</h3>
+    <p>Every image is 250 × 250 pixels, but we don't know the camera zoom. For classification, what matters is the <em>ratio</em> between length and width, not the actual mm value.</p>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section page-break">
+    <h2>4 &nbsp; What Our App Will Show</h2>
+
+    <div class="result-card">
+        <h4>Predicted Variety</h4>
+        <div class="variety">BASMATI</div>
+        <div class="conf">Confidence: 96.4%</div>
+        <div class="measurements">
+            <div>
+                <div class="meas-item"><span class="meas-label">Length</span><span class="meas-val">187 px</span></div>
+                <div class="meas-item"><span class="meas-label">Width</span><span class="meas-val">52 px</span></div>
+                <div class="meas-item"><span class="meas-label">L/W Ratio</span><span class="meas-val">3.59</span></div>
+                <div class="meas-item"><span class="meas-label">Area</span><span class="meas-val">7,124 px²</span></div>
+            </div>
+            <div>
+                <div class="meas-item"><span class="meas-label">Shape</span><span class="meas-val">Long Slender</span></div>
+                <div class="meas-item"><span class="meas-label">Color</span><span class="meas-val">White</span></div>
+                <div class="meas-item"><span class="meas-label">Texture</span><span class="meas-val">Smooth</span></div>
+                <div class="meas-item"><span class="meas-label">Tex. Std</span><span class="meas-val">6.42</span></div>
+            </div>
+        </div>
+    </div>
+
+    <h3>How It Works (7 Steps — OpenCV Pipeline)</h3>
+    <ol class="steps">
+        <li><strong>Input</strong> — User uploads a rice grain photo or selects a dataset sample</li>
+        <li><strong>Grayscale</strong> — Convert to single channel for edge detection</li>
+        <li><strong>Gaussian Blur</strong> — Reduce noise with 5×5 kernel</li>
+        <li><strong>Otsu Thresholding</strong> — Separate grain from background automatically</li>
+        <li><strong>Contour Detection</strong> — Find the grain outline</li>
+        <li><strong>Ellipse Fitting</strong> — Fit ellipse + bounding rectangle for size/shape</li>
+        <li><strong>Texture Analysis</strong> — Compute Laplacian standard deviation</li>
+    </ol>
+
+    <div class="info-box progress">
+        <strong>Current Status:</strong> All 7 pipeline steps are implemented and working. Each step's visual output is displayed to the user in real time.
+    </div>
+</div>
+
+<!-- SECTION 5 -->
+<div class="section page-break">
+    <h2>5 &nbsp; Our Tools</h2>
+    <table>
+        <thead><tr><th>Tool</th><th>What It Is</th><th>What We Use It For</th></tr></thead>
+        <tbody>
+            <tr><td>Python</td><td>Programming language</td><td>Everything is written in Python</td></tr>
+            <tr><td>Google Colab</td><td>Free online coding + GPU</td><td>Training AI models</td></tr>
+            <tr><td>TensorFlow</td><td>AI library by Google</td><td>Building deep learning models</td></tr>
+            <tr><td>Scikit-learn</td><td>ML library</td><td>Building SVM, Random Forest, KNN</td></tr>
+            <tr><td>OpenCV</td><td>Image processing library</td><td>Measuring size, shape, color, texture</td></tr>
+            <tr><td>Streamlit</td><td>Web app framework</td><td>Building the user interface</td></tr>
+            <tr><td>NumPy / Pandas</td><td>Data handling</td><td>Working with numbers and tables</td></tr>
+            <tr><td>Matplotlib</td><td>Charting library</td><td>Making graphs for the paper</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SECTION 6 -->
+<div class="section page-break">
+    <h2>6 &nbsp; The Models We'll Build</h2>
+
+    <div class="two-col">
+        <div class="col-box">
+            <h4>Group A — Deep Learning (Images)</h4>
+            <table>
+                <thead><tr><th>Model</th><th>What It Is</th><th>Target</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Custom CNN</strong></td><td>3 conv blocks, from scratch</td><td>~95–97%</td></tr>
+                    <tr><td><strong>MobileNetV2</strong></td><td>Transfer learning, frozen base</td><td>~99%</td></tr>
+                </tbody>
+            </table>
+            <p>See <strong>raw pixels</strong>. Learn features automatically. Do NOT use the OpenCV pipeline.</p>
+        </div>
+        <div class="col-box">
+            <h4>Group B — Classical ML (Numbers)</h4>
+            <table>
+                <thead><tr><th>Model</th><th>How It Works</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>SVM</strong></td><td>Mathematical boundaries between types</td></tr>
+                    <tr><td><strong>Random Forest</strong></td><td>100+ decision trees, majority vote</td></tr>
+                    <tr><td><strong>KNN</strong></td><td>Finds most similar grains</td></tr>
+                </tbody>
+            </table>
+            <p>Use <strong>108 extracted numbers</strong> (size + shape + color + texture), not images.</p>
+        </div>
+    </div>
+
+    <div class="info-box warning">
+        <strong>Why build both?</strong> We compare them and answer: "Is deep learning actually better than simpler methods for rice classification?" This comparison is our paper's core contribution.
+    </div>
+
+    <h3>System Architecture</h3>
+    <div class="flow">           📷 Input Rice Grain Image (250×250)
+                      │
+            ┌─────────┴─────────┐
+            ▼                   ▼
+   Pipeline A: Deep Learning   Pipeline B: Classical ML
+            │                   │
+   Normalize pixels (0–1)      OpenCV Processing
+            │                   │
+      ┌─────┴─────┐      Grayscale → Blur → Threshold
+      ▼           ▼            │
+  Custom CNN  MobileNetV2   Contour + Ellipse Detection
+      │           │            │
+      ▼           ▼       Extract 108 Features
+  DL Predictions         (Size + Shape + Color + Texture)
+      │                        │
+      │                  ┌─────┼─────┐
+      │                  ▼     ▼     ▼
+      │                SVM    RF    KNN
+      │                  │     │     │
+      │                  ▼     ▼     ▼
+      │               ML Predictions
+      │                        │
+      └────────┬───────────────┘
+               ▼
+      📊 Comparison Dashboard
+      Accuracy · Confusion Matrix · Ablation Study
+               │
+               ▼
+      🏆 Research Conclusion: DL vs Classical ML</div>
+</div>
+
+<!-- SECTION 7 -->
+<div class="section page-break">
+    <h2>7 &nbsp; Ablation Study (Our Secret Weapon)</h2>
+    <p>An ablation study means removing parts one at a time to see how much each matters. With <strong>4 parameters</strong>, we now have <strong>15 experiments</strong>:</p>
+
+    <table>
+        <thead><tr><th>Experiment</th><th>Features Used</th><th># Features</th><th>Accuracy</th><th>Status</th></tr></thead>
+        <tbody>
+            <tr><td>Size only</td><td>Area, perimeter, axis lengths…</td><td>12</td><td>—</td><td><span class="badge badge-todo">To be trained</span></td></tr>
+            <tr><td>Shape only</td><td>Eccentricity, extent, roundness…</td><td>4</td><td>—</td><td><span class="badge badge-todo">To be trained</span></td></tr>
+            <tr><td>Color only</td><td>RGB, HSV values…</td><td>90</td><td>—</td><td><span class="badge badge-todo">To be trained</span></td></tr>
+            <tr><td>Texture only</td><td>Laplacian std dev, roughness</td><td>2</td><td>—</td><td><span class="badge badge-todo">To be trained</span></td></tr>
+            <tr style="background:#f0f0f0;"><td colspan="5" style="font-weight:600; color:#5a7d5f;">Pairs (2 parameters)</td></tr>
+            <tr><td>Size + Shape</td><td>Combined</td><td>16</td><td>—</td><td><span class="badge badge-todo">To be trained</span></td></tr>
+            <tr><td>Size + Color</td><td>Combined</td><td>102</td><td>—</td><td><span class="badge badge-todo">To be trained</span></td></tr>
+            <tr><td>Size + Texture</td><td>Combined</td><td>14</td><td>—</td><td><span class="badge badge-todo">To be trained</span></td></tr>
+            <tr><td>Shape + Color</td><td>Combined</td><td>94</td><td>—</td><td><span class="badge badge-todo">To be trained</span></td></tr>
+            <tr><td>Shape + Texture</td><td>Combined</td><td>6</td><td>—</td><td><span class="badge badge-todo">To be trained</span></td></tr>
+            <tr><td>Color + Texture</td><td>Combined</td><td>92</td><td>—</td><td><span class="badge badge-todo">To be trained</span></td></tr>
+            <tr style="background:#f0f0f0;"><td colspan="5" style="font-weight:600; color:#5a7d5f;">Triples (3 parameters)</td></tr>
+            <tr><td>Size + Shape + Color</td><td>Combined</td><td>106</td><td>—</td><td><span class="badge badge-todo">To be trained</span></td></tr>
+            <tr><td>Size + Shape + Texture</td><td>Combined</td><td>18</td><td>—</td><td><span class="badge badge-todo">To be trained</span></td></tr>
+            <tr><td>Size + Color + Texture</td><td>Combined</td><td>104</td><td>—</td><td><span class="badge badge-todo">To be trained</span></td></tr>
+            <tr><td>Shape + Color + Texture</td><td>Combined</td><td>96</td><td>—</td><td><span class="badge badge-todo">To be trained</span></td></tr>
+            <tr style="background:#f2f7f0;"><td><strong>ALL FOUR</strong></td><td><strong>Everything</strong></td><td><strong>108</strong></td><td>—</td><td><span class="badge badge-todo">To be trained</span></td></tr>
+        </tbody>
+    </table>
+
+    <p>This answers: <em>"Which physical property matters most when identifying rice?"</em></p>
+
+    <div class="info-box">
+        <strong>Why this is powerful:</strong> Very easy to do (just re-run the model with fewer columns) but looks extremely impressive. With 4 parameters we have 15 experiments instead of 7 — a much more thorough analysis. This is a genuine research contribution.
+    </div>
+</div>
+
+<!-- SECTION 8 -->
+<div class="section page-break">
+    <h2>8 &nbsp; Team Roles (5 Members)</h2>
+    <table>
+        <thead><tr><th>Member</th><th>Role</th><th>Responsibility</th></tr></thead>
+        <tbody>
+            <tr><td>Person 1</td><td><strong>Data & Preprocessing</strong></td><td>Download dataset, explore it, split into train/test, image cleanup</td></tr>
+            <tr><td>Person 2</td><td><strong>Deep Learning Engineer</strong></td><td>Build Custom CNN + MobileNetV2, train on Colab, tune accuracy</td></tr>
+            <tr><td>Person 3</td><td><strong>Classical ML Engineer</strong></td><td>Build SVM, RF, KNN on 108 features, run ablation study</td></tr>
+            <tr><td>Person 4</td><td><strong>App Developer</strong></td><td>Build Streamlit web app, design result card, integrate OpenCV pipeline</td></tr>
+            <tr><td>Person 5</td><td><strong>Paper Writer & Integrator</strong></td><td>Write paper throughout, literature review, integrate code, presentations</td></tr>
+        </tbody>
+    </table>
+    <p><strong>How You'll Work Together:</strong> Person 1 prepares data first. Persons 2 and 3 work in parallel. Person 4 builds the app and plugs in trained models. Person 5 writes the paper throughout — not just at the end.</p>
+
+    <div class="info-box warning">
+        <strong>Common mistake:</strong> Leaving the paper for the last week. Person 5 should start the literature review and methodology from Week 1. By the time models are trained, the paper should be 50% done.
+    </div>
+</div>
+
+<!-- SECTION 9 -->
+<div class="section page-break">
+    <h2>9 &nbsp; Semester Timeline (14 Weeks)</h2>
+    <table>
+        <thead><tr><th>Week</th><th>Phase</th><th>Tasks</th><th>Lead</th></tr></thead>
+        <tbody>
+            <tr><td>1–2</td><td>Research & Setup</td><td>Read research papers. Set up Colab, download dataset, create GitHub repo.</td><td>Everyone</td></tr>
+            <tr><td>3–4</td><td>Data Exploration</td><td>Explore dataset (charts, stats). Split into train (70%), validation (15%), test (15%).</td><td>Person 1</td></tr>
+            <tr><td>5–7</td><td>Model Building</td><td>P2: CNN + MobileNetV2. P3: SVM, RF, KNN. P5: Intro + Related Work.</td><td>P2, P3, P5</td></tr>
+            <tr><td>8–9</td><td>Ablation Study</td><td>P3: 15-experiment ablation (4 params). P2: Grad-CAM. P5: Methodology.</td><td>P2, P3, P5</td></tr>
+            <tr><td>10–11</td><td>App Development</td><td>P4: Streamlit app. P1: OpenCV measurement code.</td><td>P4, P1</td></tr>
+            <tr><td>12–13</td><td>Evaluation & Paper</td><td>Confusion matrices, accuracy tables, charts. P5: Results + Conclusion.</td><td>Everyone</td></tr>
+            <tr><td>14</td><td>Final Polish</td><td>Test everything. Clean code + GitHub. Finalize paper. Slides + live demo.</td><td>Everyone</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SECTION 10 -->
+<div class="section page-break">
+    <h2>10 &nbsp; Research Paper Outline</h2>
+    <h3>Suggested Title</h3>
+    <p><em>"Automated Rice Grain Classification Using Deep Learning: A Comparative Study of CNN and Classical Machine Learning Approaches Based on Shape, Size, Color, and Texture Features"</em></p>
+
+    <h3>Paper Sections</h3>
+    <ol class="steps">
+        <li><strong>Abstract</strong> (~200 words) — Summary. Write LAST.</li>
+        <li><strong>Introduction</strong> (1–1.5 pages) — Why rice grading matters, our contributions.</li>
+        <li><strong>Related Work</strong> (1 page) — What others have done, our gap.</li>
+        <li><strong>Methodology</strong> (2–3 pages) — Dataset, preprocessing, 4 parameters, model architectures, ablation design.</li>
+        <li><strong>Results & Discussion</strong> (2 pages) — Comparison table, ablation results, confusion matrices, Grad-CAM.</li>
+        <li><strong>Web Application</strong> (0.5 page) — Screenshot of Streamlit app.</li>
+        <li><strong>Conclusion & Future Work</strong> (0.5 page) — Summary, limitations, future work.</li>
+        <li><strong>References</strong> — 15–25 references.</li>
+    </ol>
+
+    <h3>Key Results Table (To Be Filled After Training)</h3>
+    <table>
+        <thead><tr><th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1-Score</th></tr></thead>
+        <tbody>
+            <tr><td>Custom CNN</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>MobileNetV2</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>SVM</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>Random Forest</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+            <tr><td>KNN</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SECTION 11 -->
+<div class="section page-break">
+    <h2>11 &nbsp; Final Deliverables & Current Status</h2>
+
+    <table>
+        <thead><tr><th>Deliverable</th><th>Description</th><th>Status</th></tr></thead>
+        <tbody>
+            <tr><td>Trained Models</td><td>CNN + MobileNetV2 + SVM + RF + KNN</td><td><span class="badge badge-todo">To do</span></td></tr>
+            <tr><td>Working Web App</td><td>Upload grain → get variety + size + shape + color + texture</td><td><span class="badge badge-progress">Prototype done</span></td></tr>
+            <tr><td>OpenCV Pipeline</td><td>7-step: grayscale → blur → threshold → contour → ellipse → texture → measurements</td><td><span class="badge badge-done">Done</span></td></tr>
+            <tr><td>Feature Extraction</td><td>All 4 parameters extracted from real images via OpenCV</td><td><span class="badge badge-done">Done</span></td></tr>
+            <tr><td>Ablation Study</td><td>15-experiment table (4 parameters)</td><td><span class="badge badge-todo">To do</span></td></tr>
+            <tr><td>Research Paper</td><td>6–8 page paper in academic format</td><td><span class="badge badge-todo">To do</span></td></tr>
+            <tr><td>Presentation</td><td>10–12 slides with live demo</td><td><span class="badge badge-todo">To do</span></td></tr>
+            <tr><td>GitHub Repository</td><td>Clean, organized code with README</td><td><span class="badge badge-progress">In progress</span></td></tr>
+        </tbody>
+    </table>
+
+    <h3>Completed Work (August 2026)</h3>
+    <table>
+        <thead><tr><th>Item</th><th>Details</th></tr></thead>
+        <tbody>
+            <tr><td>Streamlit Web App</td><td>Running on localhost:8503. Upload or select sample images. Shows all 7 pipeline steps.</td></tr>
+            <tr><td>OpenCV Pipeline</td><td>Input → Grayscale → Blur → Threshold → Contour → Ellipse → Texture Map</td></tr>
+            <tr><td>Size Extraction</td><td>Length, width, L/W ratio, area, perimeter — real data via ellipse fitting</td></tr>
+            <tr><td>Shape Extraction</td><td>Shape label, circularity, solidity — from contour analysis</td></tr>
+            <tr><td>Color Extraction</td><td>Mean RGB, brightness, color label — from masked grain region</td></tr>
+            <tr><td>Texture Extraction</td><td>Laplacian std dev, texture label — from Laplacian edge filter</td></tr>
+            <tr><td>UI Display</td><td>4-column measurements (Size, Shape, Color, Texture) + 7-step pipeline visual</td></tr>
+            <tr><td>Documentation</td><td>Technical deep-dive, research paper guide, architecture doc, flowchart</td></tr>
+        </tbody>
+    </table>
+
+    <h3>What Will Impress the Professor</h3>
+    <table>
+        <thead><tr><th>What We Do</th><th>Why It's Impressive</th></tr></thead>
+        <tbody>
+            <tr><td>Compare 5 different models</td><td>Shows we understand multiple approaches</td></tr>
+            <tr><td>4-parameter ablation study (15 experiments)</td><td>Shows scientific thinking</td></tr>
+            <tr><td>Working web app</td><td>Goes beyond a notebook — it's a real product</td></tr>
+            <tr><td>Grad-CAM heatmaps</td><td>Shows we can explain WHY the AI decides</td></tr>
+            <tr><td>Texture as 4th parameter</td><td>Goes beyond the dataset — shows initiative</td></tr>
+            <tr><td>Paper written throughout</td><td>Shows discipline and methodology</td></tr>
+            <tr><td>Honest about limitations</td><td>Professors respect intellectual honesty</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- SECTION 12 -->
+<div class="section page-break">
+    <h2>12 &nbsp; Setup Guide</h2>
+
+    <h3>Step 1: Create a Kaggle Account</h3>
+    <p>Go to <strong>kaggle.com</strong> and sign up for free.</p>
+
+    <h3>Step 2: Open Google Colab</h3>
+    <p>Go to <strong>colab.research.google.com</strong> — free coding environment with GPU access.</p>
+
+    <h3>Step 3: Download the Dataset (in Colab)</h3>
+    <div class="flow" style="font-size: 8.5pt;"># Install Kaggle tool
+!pip install kaggle
+
+# Upload your Kaggle API key (kaggle.com > Settings > API)
+from google.colab import files
+files.upload()  # Upload kaggle.json file
+
+# Set up the key
+!mkdir -p ~/.kaggle
+!cp kaggle.json ~/.kaggle/
+!chmod 600 ~/.kaggle/kaggle.json
+
+# Download rice dataset
+!kaggle datasets download -d muratkokludataset/rice-image-dataset
+!unzip rice-image-dataset.zip -d ./data/</div>
+
+    <h3>Step 4: Save Work to Google Drive</h3>
+    <div class="flow" style="font-size: 8.5pt;">from google.colab import drive
+drive.mount('/content/drive')
+
+# After training, save your model:
+model.save('/content/drive/MyDrive/rice_model.keras')</div>
+
+    <div class="info-box warning">
+        <strong>Important:</strong> Google Colab sessions expire after a few hours. Always save your trained model files to Google Drive!
+    </div>
+</div>
+
+<!-- SECTION 13 -->
+<div class="section page-break">
+    <h2>13 &nbsp; Glossary — Key Terms in Plain English</h2>
+    <table>
+        <thead><tr><th>Term</th><th>Simple Explanation</th></tr></thead>
+        <tbody>
+            <tr><td>CNN</td><td>AI that understands images by looking at patterns layer by layer</td></tr>
+            <tr><td>Transfer Learning</td><td>Taking a pre-trained AI and teaching it a new task</td></tr>
+            <tr><td>Training Data</td><td>Images we show the AI so it can learn (70% of dataset)</td></tr>
+            <tr><td>Validation Data</td><td>Images to check how AI learns during training (15%)</td></tr>
+            <tr><td>Test Data</td><td>Images AI has never seen — used for final score (15%)</td></tr>
+            <tr><td>Accuracy</td><td>What percentage of predictions were correct</td></tr>
+            <tr><td>Precision</td><td>Of all grains model said were "Basmati", how many actually were?</td></tr>
+            <tr><td>Recall</td><td>Of all actual Basmati grains, how many did model find?</td></tr>
+            <tr><td>F1-Score</td><td>Combined score of Precision and Recall</td></tr>
+            <tr><td>Confusion Matrix</td><td>Table showing which varieties get mixed up</td></tr>
+            <tr><td>Grad-CAM</td><td>Highlights which part of image the AI focused on</td></tr>
+            <tr><td>Ablation Study</td><td>Removing parts one at a time to see what matters</td></tr>
+            <tr><td>Epoch</td><td>One complete pass through all training images (we do 20–50)</td></tr>
+            <tr><td>Overfitting</td><td>When AI memorizes data instead of learning — like cramming</td></tr>
+            <tr><td>OpenCV</td><td>Free Python library for image processing</td></tr>
+            <tr><td>Streamlit</td><td>Turns Python scripts into web apps with a few lines of code</td></tr>
+            <tr><td>Laplacian</td><td>Edge-detection filter used to measure surface texture roughness</td></tr>
+            <tr><td>Feature Vector</td><td>A row of 108 numbers describing one grain's properties</td></tr>
+        </tbody>
+    </table>
+
+    <div class="page-footer" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;">
+        Rice Grain Classifier — Semester Project Plan · Updated August 2026 · 5-Member Team · 4 Parameters (Size, Shape, Color, Texture)
+    </div>
+</div>
+
+</body>
+</html>
