@@ -59,7 +59,7 @@ export default function Home() {
       formData.append("file", uploaded);
 
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/predict", {
+        const res = await fetch("https://ensemble-9acv.onrender.com/api/predict", {
           method: "POST",
           body: formData,
         });
