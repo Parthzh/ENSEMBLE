@@ -3,6 +3,15 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Upload, Cpu, Network, BookOpen, Layers, BarChart, Activity, ChevronRight, RefreshCcw, Camera, Menu, X } from "lucide-react";
+import { CoverflowCarousel } from "@/components/ui/coverflow-carousel";
+
+const SLIDES = [
+  { src: "/sample_images/Arborio.png", alt: "Arborio Rice", title: "Arborio", subtitle: "Short-grain Italian rice", meta: [{ label: "Origin", value: "Italy" }] },
+  { src: "/sample_images/Basmati.png", alt: "Basmati Rice", title: "Basmati", subtitle: "Long, slender-grained aromatic rice", meta: [{ label: "Origin", value: "India" }] },
+  { src: "/sample_images/Ipsala.png", alt: "Ipsala Rice", title: "Ipsala", subtitle: "Large grain rice", meta: [{ label: "Origin", value: "Turkey" }] },
+  { src: "/sample_images/Jasmine.png", alt: "Jasmine Rice", title: "Jasmine", subtitle: "Long-grain fragrant rice", meta: [{ label: "Origin", value: "Thailand" }] },
+  { src: "/sample_images/Karacadag.png", alt: "Karacadag Rice", title: "Karacadag", subtitle: "Round-grained rice", meta: [{ label: "Origin", value: "Turkey" }] },
+];
 
 // --- Types ---
 type ModelResult = {
@@ -155,6 +164,13 @@ export default function Home() {
               </motion.div>
             )}
           </AnimatePresence>
+        </div>
+        
+        <div className="mt-12">
+          <h3 className="text-xl font-mono font-bold tracking-widest text-gray-900 mb-6 text-center uppercase">Supported Classes</h3>
+          <div className="bg-white border-2 border-gray-900 shadow-[8px_8px_0px_0px_rgba(17,24,39,1)]">
+            <CoverflowCarousel slides={SLIDES} showCaption showNavigation showPagination />
+          </div>
         </div>
       </div>
     </motion.div>
