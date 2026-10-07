@@ -10,7 +10,7 @@ WORKDIR $HOME/app
 COPY --chown=user . $HOME/app
 
 # Install PyTorch CPU first to save ~3GB of Docker image size, then other dependencies
-RUN pip install --no-cache-dir torch torchvision --index-url https://download.pytorch.org/whl/cpu
+RUN pip install --no-cache-dir torch torchvision --extra-index-url https://download.pytorch.org/whl/cpu
 RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE 7860
