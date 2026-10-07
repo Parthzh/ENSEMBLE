@@ -124,11 +124,12 @@ export default function Home() {
       </div>
 
       {/* Social Links (BrandOrbs) */}
-      <div className="absolute top-10 right-10 flex gap-4 z-20">
-        <a href="https://github.com/Parthzh/ENSEMBLE" target="_blank" rel="noreferrer" className="block w-14 h-14 hover:scale-110 transition-transform">
+      <div className="absolute top-10 right-10 flex items-center gap-3 z-20 bg-white/90 backdrop-blur-sm border-2 border-gray-900 rounded-full px-4 py-2 shadow-[4px_4px_0px_0px_rgba(17,24,39,1)] hover:shadow-[6px_6px_0px_0px_rgba(17,24,39,1)] hover:-translate-y-0.5 transition-all">
+        <a href="https://github.com/Parthzh/ENSEMBLE" target="_blank" rel="noreferrer" className="block w-12 h-12 hover:scale-110 transition-transform relative group">
           <BrandOrbs variant="github" size="medium" mode="light" speed={1.00} />
         </a>
-        <a href="https://www.linkedin.com/in/parthagarwalzh/" target="_blank" rel="noreferrer" className="block w-14 h-14 hover:scale-110 transition-transform">
+        <div className="w-[2px] h-8 bg-gray-900/20 rounded-full"></div>
+        <a href="https://www.linkedin.com/in/parthagarwalzh/" target="_blank" rel="noreferrer" className="block w-12 h-12 hover:scale-110 transition-transform relative group">
           <BrandOrbs variant="linkedin" size="medium" mode="light" speed={1.00} />
         </a>
       </div>
