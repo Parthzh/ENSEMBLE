@@ -46,6 +46,42 @@ const generateAsciiPattern = () => {
   return art;
 };
 
+// --- Client-side image compression for mobile devices ---
+const compressImage = (file: File, maxWidth = 800, maxHeight = 800): Promise<File> => {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > maxWidth || height > maxHeight) {
+          if (width > height) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          } else {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return resolve(file);
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob((blob) => {
+          if (blob) resolve(new File([blob], file.name, { type: "image/jpeg", lastModified: Date.now() }));
+          else resolve(file);
+        }, "image/jpeg", 0.8);
+      };
+      img.onerror = () => resolve(file);
+      img.src = e.target?.result as string;
+    };
+    reader.onerror = () => resolve(file);
+    reader.readAsDataURL(file);
+  });
+};
+
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
   const [imageUri, setImageUri] = useState<string | null>(null);
@@ -63,10 +99,16 @@ export default function Home() {
 
   const handleFileUpload = React.useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const uploaded = e.target.files[0];
-      setFile(uploaded);
-      setImageUri(URL.createObjectURL(uploaded));
+      const rawFile = e.target.files[0];
+      
+      // Update UI immediately with the raw image preview
+      setImageUri(URL.createObjectURL(rawFile));
       setIsProcessing(true);
+      setErrorMessage(null); // Clear previous errors
+
+      // Compress large phone photos before uploading
+      const uploaded = await compressImage(rawFile);
+      setFile(uploaded);
 
       // Call the FastAPI Backend
       const formData = new FormData();
@@ -96,7 +138,7 @@ export default function Home() {
         }
       } catch (err) {
         console.error("Backend offline or error", err);
-        setErrorMessage("The server is currently unavailable or overloaded. Please try again in a few moments.");
+        setErrorMessage("Upload failed or backend overloaded. Ensure your device is online and the backend is running.");
         setResults(null);
         setFile(null); // Go back to welcome screen to show error
       }
