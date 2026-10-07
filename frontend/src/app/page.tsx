@@ -6,11 +6,11 @@ import { Upload, Cpu, Network, BookOpen, Layers, BarChart, Activity, ChevronRigh
 import { CoverflowCarousel } from "@/components/ui/coverflow-carousel";
 
 const SLIDES = [
-  { src: "/sample_images/Arborio.png", alt: "Arborio Rice", title: "Arborio", subtitle: "Short-grain Italian rice", meta: [{ label: "Origin", value: "Italy" }] },
-  { src: "/sample_images/Basmati.png", alt: "Basmati Rice", title: "Basmati", subtitle: "Long, slender-grained aromatic rice", meta: [{ label: "Origin", value: "India" }] },
-  { src: "/sample_images/Ipsala.png", alt: "Ipsala Rice", title: "Ipsala", subtitle: "Large grain rice", meta: [{ label: "Origin", value: "Turkey" }] },
-  { src: "/sample_images/Jasmine.png", alt: "Jasmine Rice", title: "Jasmine", subtitle: "Long-grain fragrant rice", meta: [{ label: "Origin", value: "Thailand" }] },
-  { src: "/sample_images/Karacadag.png", alt: "Karacadag Rice", title: "Karacadag", subtitle: "Round-grained rice", meta: [{ label: "Origin", value: "Turkey" }] },
+  { src: "/model_images/knn.jpg", alt: "K-Nearest Neighbors", title: "K-Nearest Neighbors", subtitle: "Distance-based spatial voting", meta: [{ label: "Accuracy", value: "92.4%" }] },
+  { src: "/model_images/rf.jpg", alt: "Random Forest", title: "Random Forest", subtitle: "100+ parallel decision trees", meta: [{ label: "Accuracy", value: "96.8%" }] },
+  { src: "/model_images/svm.jpg", alt: "Support Vector Machine", title: "Support Vector Machine", subtitle: "RBF kernel hyperplane classification", meta: [{ label: "Accuracy", value: "98.1%" }] },
+  { src: "/model_images/cnn.jpg", alt: "Custom CNN", title: "Custom CNN (3-Block)", subtitle: "From-scratch architecture for raw pixel data", meta: [{ label: "Accuracy", value: "99.2%" }] },
+  { src: "/model_images/enet.jpg", alt: "EfficientNet-B0", title: "EfficientNet-B0", subtitle: "Pre-trained deep transfer learning", meta: [{ label: "Accuracy", value: "99.7%" }] },
 ];
 
 // --- Types ---
@@ -167,7 +167,7 @@ export default function Home() {
         </div>
         
         <div className="mt-12">
-          <h3 className="text-xl font-mono font-bold tracking-widest text-gray-900 mb-6 text-center uppercase">Supported Classes</h3>
+          <h3 className="text-xl font-mono font-bold tracking-widest text-gray-900 mb-6 text-center uppercase">Ensemble Architecture</h3>
           <div className="bg-white border-2 border-gray-900 shadow-[8px_8px_0px_0px_rgba(17,24,39,1)]">
             <CoverflowCarousel slides={SLIDES} showCaption showNavigation showPagination />
           </div>
