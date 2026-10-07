@@ -165,15 +165,12 @@ def extract_basic_features(image_np):
 
     # Validate that this is actually a rice grain (reject screenshots/random photos)
     
-    # 1. Rice is elongated. Length/Width ratio should be between 1.1 and 6.0
-    if lw_ratio < 1.1 or lw_ratio > 6.0: return None
-    
-    # 2. Rice is a solid convex shape. Solidity should be moderately high.
+    # 1. Rice is a solid convex shape. Solidity should be moderately high.
     hull = cv2.convexHull(grain_contour)
     hull_area = cv2.contourArea(hull)
     if hull_area > 0:
         solidity = area / float(hull_area)
-        if solidity < 0.70: return None # Rejects text blocks, complex shapes, icons
+        if solidity < 0.50: return None # Rejects highly irregular text blocks/complex shapes
 
 
     mask = np.zeros(gray.shape, dtype=np.uint8)
