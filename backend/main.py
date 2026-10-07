@@ -21,8 +21,7 @@ import io
 import warnings
 from extract_106_features import extract_features
 
-FEATURE_COLS = pd.read_csv(os.path.join(ROOT_DIR, "Dataset_Augmented", "augmented_metadata_106_features.csv"), nrows=0).columns.tolist()
-FEATURE_COLS = [c for c in FEATURE_COLS if c not in ['filename', 'rice_type']]
+FEATURE_COLS = ['area', 'perimeter', 'major_axis', 'minor_axis', 'aspect_ratio', 'eccentricity', 'convex_area', 'equiv_diameter', 'extent', 'solidity', 'roundness', 'compactness', 'shape_factor1', 'shape_factor2', 'r_mean', 'r_std', 'r_skew', 'r_kurt', 'g_mean', 'g_std', 'g_skew', 'g_kurt', 'b_mean', 'b_std', 'b_skew', 'b_kurt', 'h_mean', 'h_std', 'h_skew', 'h_kurt', 's_mean', 's_std', 's_skew', 's_kurt', 'v_mean', 'v_std', 'v_skew', 'v_kurt', 'L_mean', 'L_std', 'L_skew', 'L_kurt', 'a_mean', 'a_std', 'a_skew', 'a_kurt', 'b_lab_mean', 'b_lab_std', 'b_lab_skew', 'b_lab_kurt', 'glcm_contrast_0', 'glcm_contrast_45', 'glcm_contrast_90', 'glcm_contrast_135', 'glcm_dissimilarity_0', 'glcm_dissimilarity_45', 'glcm_dissimilarity_90', 'glcm_dissimilarity_135', 'glcm_homogeneity_0', 'glcm_homogeneity_45', 'glcm_homogeneity_90', 'glcm_homogeneity_135', 'glcm_energy_0', 'glcm_energy_45', 'glcm_energy_90', 'glcm_energy_135', 'glcm_correlation_0', 'glcm_correlation_45', 'glcm_correlation_90', 'glcm_correlation_135', 'lbp_bin_0', 'lbp_bin_1', 'lbp_bin_2', 'lbp_bin_3', 'lbp_bin_4', 'lbp_bin_5', 'lbp_bin_6', 'lbp_bin_7', 'lbp_bin_8', 'lbp_bin_9', 'lbp_bin_10', 'lbp_bin_11', 'lbp_bin_12', 'lbp_bin_13', 'lbp_bin_14', 'lbp_bin_15', 'lbp_bin_16', 'lbp_bin_17', 'lbp_bin_18', 'lbp_bin_19', 'lbp_bin_20', 'lbp_bin_21', 'lbp_bin_22', 'lbp_bin_23', 'lbp_bin_24', 'lbp_bin_25', 'hu_moment_0', 'hu_moment_1', 'hu_moment_2', 'hu_moment_3', 'hu_moment_4', 'hu_moment_5', 'hu_moment_6', 'bbox_width', 'bbox_height', 'bbox_diagonal']
 
 def generate_ascii_art(image_np, width=60):
     gray = cv2.cvtColor(image_np, cv2.COLOR_RGB2GRAY)
