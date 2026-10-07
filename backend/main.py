@@ -8,6 +8,7 @@ import tempfile
 import torch
 import torch.nn as nn
 from torchvision import transforms
+import sys
 # Set up relative paths to allow cross-platform deployment
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(ROOT_DIR)
