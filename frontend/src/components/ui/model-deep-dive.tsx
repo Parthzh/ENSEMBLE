@@ -39,7 +39,7 @@ const KnnAnimation = () => (
     {/* Background points */}
     {[...Array(15)].map((_, i) => (
       <motion.div key={i} className="absolute w-2 h-2 rounded-full bg-gray-300" 
-        style={{ left: \`\${20 + (i * 7) % 60}%\`, top: \`\${20 + (i * 13) % 60}%\` }}
+        style={{ left: `${20 + (i * 7) % 60}%`, top: `${20 + (i * 13) % 60}%` }}
       />
     ))}
     {/* Target point */}
@@ -51,7 +51,7 @@ const KnnAnimation = () => (
     {/* Connecting lines */}
     <svg className="absolute inset-0 w-full h-full pointer-events-none">
       {[1, 2, 3].map(i => (
-        <motion.line key={i} x1="50%" y1="50%" x2={\`\${40 + i * 5}%\`} y2={\`\${30 + i * 10}%\`} stroke="#111827" strokeWidth="2" strokeDasharray="4 4"
+        <motion.line key={i} x1="50%" y1="50%" x2={`${40 + i * 5}%`} y2={`${30 + i * 10}%`} stroke="#111827" strokeWidth="2" strokeDasharray="4 4"
           initial={{ pathLength: 0, opacity: 0 }}
           animate={{ pathLength: 1, opacity: 0.5 }}
           transition={{ duration: 1, delay: 0.5 + i * 0.2, repeat: Infinity, repeatDelay: 2 }}
@@ -86,11 +86,11 @@ const SvmAnimation = () => (
   <div className="relative w-full h-48 border-2 border-gray-900 bg-gray-50 overflow-hidden flex items-center justify-center">
     {/* Group 1 */}
     {[...Array(8)].map((_, i) => (
-      <motion.div key={\`g1-\${i}\`} className="absolute w-3 h-3 bg-gray-400 rounded-sm" style={{ left: \`\${15 + Math.random() * 20}%\`, top: \`\${20 + Math.random() * 40}%\` }} />
+      <motion.div key={`g1-${i}`} className="absolute w-3 h-3 bg-gray-400 rounded-sm" style={{ left: `${15 + Math.random() * 20}%`, top: `${20 + Math.random() * 40}%` }} />
     ))}
     {/* Group 2 */}
     {[...Array(8)].map((_, i) => (
-      <motion.div key={\`g2-\${i}\`} className="absolute w-3 h-3 bg-gray-900 rounded-full" style={{ right: \`\${15 + Math.random() * 20}%\`, bottom: \`\${20 + Math.random() * 40}%\` }} />
+      <motion.div key={`g2-${i}`} className="absolute w-3 h-3 bg-gray-900 rounded-full" style={{ right: `${15 + Math.random() * 20}%`, bottom: `${20 + Math.random() * 40}%` }} />
     ))}
     {/* Hyperplane */}
     <motion.div 
@@ -118,9 +118,9 @@ const CnnAnimation = () => (
           transition={{ duration: 3, delay: layer * 0.5, repeat: Infinity }}
           className="border-2 border-gray-900 bg-white/50 shadow-[4px_4px_0_0_rgba(17,24,39,0.2)]"
           style={{ 
-            width: \`\${80 - layer * 15}px\`, 
-            height: \`\${80 - layer * 15}px\`,
-            borderWidth: \`\${1 + layer}px\`
+            width: `${80 - layer * 15}px`, 
+            height: `${80 - layer * 15}px`,
+            borderWidth: `${1 + layer}px`
           }}
         />
         {layer < 3 && (
@@ -143,7 +143,7 @@ const EnetAnimation = () => (
         <motion.div 
           key={block}
           initial={{ height: 0, opacity: 0 }}
-          animate={{ height: \`\${30 + block * 15}px\`, opacity: 1 }}
+          animate={{ height: `${30 + block * 15}px`, opacity: 1 }}
           transition={{ duration: 0.5, delay: block * 0.2, repeat: Infinity, repeatDelay: 2 }}
           className="w-12 border-2 border-gray-900 bg-white relative group"
         >
@@ -259,13 +259,13 @@ export function ModelDeepDive({ modelName }: ModelProps) {
                           return (
                             <div 
                               key={j} 
-                              className={\`flex-1 aspect-square flex items-center justify-center font-mono text-xs font-bold border-2 transition-all hover:scale-110 \${
+                              className={`flex-1 aspect-square flex items-center justify-center font-mono text-xs font-bold border-2 transition-all hover:scale-110 ${
                                 isCorrect 
                                   ? "border-gray-900 bg-gray-900 text-white" 
                                   : val > 0 
                                     ? "border-gray-400 bg-white text-gray-900" 
                                     : "border-transparent text-gray-300"
-                              }\`}
+                              }`}
                               style={isCorrect ? { opacity: Math.max(0.4, intensity) } : {}}
                             >
                               {val}
