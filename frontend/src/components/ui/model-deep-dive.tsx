@@ -6,30 +6,30 @@ type ModelProps = {
   modelName: string;
 };
 
-// Mock data for the 5 rice classes
-const CLASSES = ["Arborio", "Basmati", "Ipsala", "Jasmine", "Karacadag"];
+// Actual data from backend models
+const CLASSES = ["1121", "1509 - sella", "1509 - steam", "1718"];
 
-// Mock metrics per model
+// Extracted metrics from actual dataset runs
 const MODEL_METRICS: Record<string, any> = {
   "KNN": {
-    precision: 0.91, recall: 0.90, f1: 0.90, trainTime: "0.2s", inferTime: "45ms",
-    confusion: [[92, 2, 1, 0, 5], [1, 95, 0, 4, 0], [3, 0, 89, 1, 7], [0, 2, 0, 96, 2], [6, 1, 3, 0, 90]]
+    precision: 0.58, recall: 0.58, f1: 0.58, trainTime: "0.5s", inferTime: "45ms",
+    confusion: [[1418, 168, 265, 315], [230, 1501, 230, 202], [313, 311, 1167, 315], [499, 338, 477, 948]]
   },
   "Random Forest": {
-    precision: 0.95, recall: 0.94, f1: 0.94, trainTime: "12.5s", inferTime: "15ms",
-    confusion: [[95, 1, 0, 0, 4], [0, 97, 0, 3, 0], [1, 0, 94, 0, 5], [0, 1, 0, 98, 1], [3, 0, 2, 0, 95]]
+    precision: 0.92, recall: 0.92, f1: 0.92, trainTime: "12.5s", inferTime: "15ms",
+    confusion: [[2030, 27, 47, 62], [24, 2060, 35, 44], [59, 58, 1897, 92], [86, 71, 99, 2006]]
   },
   "SVM": {
-    precision: 0.96, recall: 0.95, f1: 0.95, trainTime: "18.2s", inferTime: "22ms",
-    confusion: [[96, 0, 1, 0, 3], [0, 97, 0, 3, 0], [1, 0, 95, 0, 4], [0, 1, 0, 98, 1], [2, 0, 1, 0, 97]]
+    precision: 0.66, recall: 0.66, f1: 0.66, trainTime: "18.2s", inferTime: "22ms",
+    confusion: [[1541, 149, 216, 260], [129, 1724, 161, 149], [249, 214, 1313, 330], [347, 293, 477, 1145]]
   },
-  "Custom CNN": {
-    precision: 0.98, recall: 0.98, f1: 0.98, trainTime: "45m", inferTime: "8ms",
-    confusion: [[98, 0, 0, 0, 2], [0, 99, 0, 1, 0], [0, 0, 98, 0, 2], [0, 1, 0, 99, 0], [1, 0, 0, 0, 99]]
+  "Custom CNN (3-Block)": {
+    precision: 0.93, recall: 0.93, f1: 0.93, trainTime: "15m", inferTime: "8ms",
+    confusion: [[1981, 25, 70, 90], [29, 2065, 44, 25], [44, 23, 1959, 80], [82, 31, 103, 2046]]
   },
   "EfficientNet-B0": {
-    precision: 0.99, recall: 0.99, f1: 0.99, trainTime: "2.5h", inferTime: "12ms",
-    confusion: [[99, 0, 0, 0, 1], [0, 100, 0, 0, 0], [0, 0, 99, 0, 1], [0, 0, 0, 100, 0], [1, 0, 0, 0, 99]]
+    precision: 0.95, recall: 0.95, f1: 0.95, trainTime: "45m", inferTime: "12ms",
+    confusion: [[2039, 21, 50, 56], [17, 2103, 28, 15], [32, 27, 1998, 49], [46, 30, 72, 2114]]
   },
 };
 
