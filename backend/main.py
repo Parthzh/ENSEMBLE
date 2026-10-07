@@ -163,14 +163,7 @@ def extract_basic_features(image_np):
     lw_ratio = length / width_val if width_val > 0 else 1.0
     perimeter = cv2.arcLength(grain_contour, True)
 
-    # Validate that this is actually a rice grain (reject screenshots/random photos)
-    
-    # 1. Rice is a solid convex shape. Solidity should be moderately high.
-    hull = cv2.convexHull(grain_contour)
-    hull_area = cv2.contourArea(hull)
-    if hull_area > 0:
-        solidity = area / float(hull_area)
-        if solidity < 0.50: return None # Rejects highly irregular text blocks/complex shapes
+
 
 
     mask = np.zeros(gray.shape, dtype=np.uint8)
