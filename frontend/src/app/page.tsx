@@ -120,12 +120,12 @@ export default function Home() {
     >
       
       {/* Decorative ASCII */}
-      <div className="absolute top-10 left-10 text-[8px] font-mono leading-[8px] text-gray-400 opacity-50 z-0 whitespace-pre">
+      <div className="hidden md:block absolute top-10 left-10 text-[8px] font-mono leading-[8px] text-gray-400 opacity-50 z-0 whitespace-pre">
         {`  .::.\n.::::::.\n.::::::::.\n.::::::::::.\n:::::::SYSTEM\n:::::::ONLINE`}
       </div>
 
       {/* Social Links (BrandOrbs) */}
-      <div className="absolute top-10 right-10 flex items-center gap-3 z-20 bg-white/90 backdrop-blur-sm border-2 border-gray-900 rounded-full px-4 py-2 shadow-[4px_4px_0px_0px_rgba(17,24,39,1)] hover:shadow-[6px_6px_0px_0px_rgba(17,24,39,1)] hover:-translate-y-0.5 transition-all">
+      <div className="absolute top-4 right-4 md:top-10 md:right-10 flex items-center gap-3 z-20 bg-white/90 backdrop-blur-sm border-2 border-gray-900 rounded-full px-4 py-2 shadow-[4px_4px_0px_0px_rgba(17,24,39,1)] hover:shadow-[6px_6px_0px_0px_rgba(17,24,39,1)] hover:-translate-y-0.5 transition-all scale-75 md:scale-100 origin-top-right">
         <a href="https://github.com/Parthzh/ENSEMBLE" target="_blank" rel="noreferrer" className="block w-12 h-12 hover:scale-110 transition-transform relative group">
           <BrandOrbs variant="github" size="medium" mode="light" speed={1.00} />
         </a>
@@ -136,10 +136,10 @@ export default function Home() {
       </div>
 
       <div className="z-10 max-w-4xl w-full">
-        <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-gray-900 mb-4">ENSEMBLE.AI</h1>
-        <div className="border-l-4 border-gray-900 pl-4 mb-12">
-          <p className="text-xl font-mono uppercase tracking-widest text-gray-600">Five-Model Neural Architecture</p>
-          <p className="text-sm text-gray-500 mt-2 max-w-lg">Eliminate manual grain sorting. Processing 106 physical features in parallel using Classical ML and Deep Vision Nets.</p>
+        <h1 className="text-5xl md:text-8xl font-bold tracking-tighter text-gray-900 mb-4 mt-16 md:mt-0">ENSEMBLE.AI</h1>
+        <div className="border-l-4 border-gray-900 pl-4 mb-8 md:mb-12">
+          <p className="text-lg md:text-xl font-mono uppercase tracking-widest text-gray-600">Five-Model Neural Architecture</p>
+          <p className="text-xs md:text-sm text-gray-500 mt-2 max-w-lg">Eliminate manual grain sorting. Processing 106 physical features in parallel using Classical ML and Deep Vision Nets.</p>
         </div>
 
         <div className="bg-white border-2 border-gray-900 p-8 shadow-[8px_8px_0px_0px_rgba(17,24,39,1)] transition-transform hover:-translate-y-1 relative overflow-hidden group">
@@ -259,7 +259,7 @@ export default function Home() {
         {/* Master Output */}
         <div className="w-full md:w-1/3 bg-white border-2 border-gray-900 p-8 shadow-[8px_8px_0px_0px_rgba(17,24,39,1)] flex flex-col justify-center min-h-[300px]">
           <h3 className="font-mono text-sm uppercase text-gray-500 mb-2 border-b border-gray-200 pb-2">Master Output</h3>
-          <div className="text-6xl font-bold tracking-tighter my-4">{results?.master_prediction || "WAIT"}</div>
+          <div className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter my-4 break-words leading-tight">{results?.master_prediction || "WAIT"}</div>
           <div className="font-mono text-sm">
             <span className="text-gray-500">CONFIDENCE:</span> 
             <span className="ml-2 font-bold">{results?.master_confidence || 0}%</span>

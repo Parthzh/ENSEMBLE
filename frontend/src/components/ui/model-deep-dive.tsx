@@ -182,8 +182,8 @@ export function ModelDeepDive({ modelName }: ModelProps) {
   return (
     <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="max-w-5xl mx-auto space-y-8">
       <div>
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-2">{modelName}</h1>
-        <p className="font-mono text-gray-500 uppercase tracking-widest border-b-2 border-gray-900 pb-4">Internal Architecture Inspection</p>
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-2 leading-tight break-words">{modelName}</h1>
+        <p className="font-mono text-gray-500 uppercase tracking-widest border-b-2 border-gray-900 pb-4 text-xs md:text-sm">Internal Architecture Inspection</p>
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -236,7 +236,10 @@ export function ModelDeepDive({ modelName }: ModelProps) {
               <div className="min-w-[500px]">
                 {/* Headers */}
                 <div className="flex mb-2">
-                  <div className="w-24 shrink-0"></div>
+                  <div className="w-24 shrink-0 flex flex-col justify-end items-end pr-2 pb-1 font-mono text-[9px] uppercase text-gray-400 leading-tight">
+                    <span>Predicted &rarr;</span>
+                    <span>Actual &darr;</span>
+                  </div>
                   {CLASSES.map(c => (
                     <div key={c} className="flex-1 text-center font-mono text-[10px] uppercase text-gray-500 tracking-tighter truncate px-1">
                       {c}
@@ -275,11 +278,6 @@ export function ModelDeepDive({ modelName }: ModelProps) {
                       </div>
                     </div>
                   ))}
-                </div>
-                
-                <div className="flex justify-between mt-4 font-mono text-[10px] uppercase text-gray-400 px-24">
-                  <span>&larr; Predicted Class</span>
-                  <span className="rotate-90 origin-right translate-y-12 translate-x-4 absolute -left-4">Actual Class &rarr;</span>
                 </div>
               </div>
             </div>
