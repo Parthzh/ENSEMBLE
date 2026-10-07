@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Upload, Cpu, Network, BookOpen, Layers, BarChart, Activity, ChevronRight, RefreshCcw, Camera } from "lucide-react";
+import { Upload, Cpu, Network, BookOpen, Layers, BarChart, Activity, ChevronRight, RefreshCcw, Camera, Menu, X } from "lucide-react";
 
 // --- Types ---
 type ModelResult = {
@@ -42,6 +42,7 @@ export default function Home() {
   const [activeView, setActiveView] = useState<string>("master");
   const [asciiArt, setAsciiArt] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     setAsciiArt(generateAsciiPattern());
@@ -160,26 +161,31 @@ export default function Home() {
   const Sidebar = () => (
     <motion.div 
       initial={{ x: -300 }} animate={{ x: 0 }}
-      className="w-80 h-screen border-r-2 border-gray-900 bg-white fixed left-0 top-0 flex flex-col z-20 shadow-[4px_0px_0px_0px_rgba(17,24,39,0.1)]"
+      className={`w-80 h-screen border-r-2 border-gray-900 bg-white fixed left-0 top-0 flex flex-col z-50 shadow-[4px_0px_0px_0px_rgba(17,24,39,0.1)] transition-transform duration-300 md:translate-x-0 ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}
     >
-      <div className="p-6 border-b-2 border-gray-900">
-        <h2 className="text-2xl font-bold tracking-tighter">ENSEMBLE.AI</h2>
-        <div className="flex items-center gap-2 mt-2">
-          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-          <span className="font-mono text-xs text-gray-500">SYSTEM ONLINE</span>
+      <div className="p-6 border-b-2 border-gray-900 flex justify-between items-center">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tighter">ENSEMBLE.AI</h2>
+          <div className="flex items-center gap-2 mt-2">
+            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+            <span className="font-mono text-xs text-gray-500">SYSTEM ONLINE</span>
+          </div>
         </div>
+        <button className="md:hidden p-2 text-gray-500 hover:text-gray-900" onClick={() => setIsMobileMenuOpen(false)}>
+          <X className="w-6 h-6" />
+        </button>
       </div>
 
       <div className="flex-1 overflow-y-auto py-4">
         <div className="px-6 mb-2 text-xs font-mono text-gray-400 uppercase tracking-widest">Core</div>
-        <button onClick={() => setActiveView("master")} className={`w-full text-left px-6 py-3 font-mono text-sm border-l-4 transition-colors flex items-center justify-between ${activeView === "master" ? "border-gray-900 bg-gray-50 font-bold" : "border-transparent hover:bg-gray-50"}`}>
+        <button onClick={() => { setActiveView("master"); setIsMobileMenuOpen(false); }} className={`w-full text-left px-6 py-3 font-mono text-sm border-l-4 transition-colors flex items-center justify-between ${activeView === "master" ? "border-gray-900 bg-gray-50 font-bold" : "border-transparent hover:bg-gray-50"}`}>
           <div className="flex items-center gap-3"><Layers className="w-4 h-4" /> Master Dashboard</div>
           {activeView === "master" && <ChevronRight className="w-4 h-4" />}
         </button>
 
         <div className="px-6 mt-6 mb-2 text-xs font-mono text-gray-400 uppercase tracking-widest">01 | Classical ML</div>
         {["KNN", "Random Forest", "SVM"].map(model => (
-          <button key={model} onClick={() => setActiveView(model)} className={`w-full text-left px-6 py-3 font-mono text-sm border-l-4 transition-colors flex items-center justify-between ${activeView === model ? "border-gray-900 bg-gray-50 font-bold" : "border-transparent hover:bg-gray-50"}`}>
+          <button key={model} onClick={() => { setActiveView(model); setIsMobileMenuOpen(false); }} className={`w-full text-left px-6 py-3 font-mono text-sm border-l-4 transition-colors flex items-center justify-between ${activeView === model ? "border-gray-900 bg-gray-50 font-bold" : "border-transparent hover:bg-gray-50"}`}>
             <div className="flex items-center gap-3"><BarChart className="w-4 h-4" /> {model}</div>
             {activeView === model && <ChevronRight className="w-4 h-4" />}
           </button>
@@ -187,7 +193,7 @@ export default function Home() {
 
         <div className="px-6 mt-6 mb-2 text-xs font-mono text-gray-400 uppercase tracking-widest">02 | Deep Vision</div>
         {["Custom CNN", "EfficientNet-B0"].map(model => (
-          <button key={model} onClick={() => setActiveView(model)} className={`w-full text-left px-6 py-3 font-mono text-sm border-l-4 transition-colors flex items-center justify-between ${activeView === model ? "border-gray-900 bg-gray-50 font-bold" : "border-transparent hover:bg-gray-50"}`}>
+          <button key={model} onClick={() => { setActiveView(model); setIsMobileMenuOpen(false); }} className={`w-full text-left px-6 py-3 font-mono text-sm border-l-4 transition-colors flex items-center justify-between ${activeView === model ? "border-gray-900 bg-gray-50 font-bold" : "border-transparent hover:bg-gray-50"}`}>
             <div className="flex items-center gap-3"><Cpu className="w-4 h-4" /> {model}</div>
             {activeView === model && <ChevronRight className="w-4 h-4" />}
           </button>
@@ -318,11 +324,28 @@ export default function Home() {
         ) : (
           <div key="app" className="flex">
             <Sidebar />
-            <main className="ml-80 flex-1 p-12 overflow-y-auto min-h-screen">
+            
+            {/* Mobile Overlay */}
+            {isMobileMenuOpen && (
+              <div 
+                className="fixed inset-0 bg-black/50 z-40 md:hidden"
+                onClick={() => setIsMobileMenuOpen(false)}
+              />
+            )}
+
+            <main className="md:ml-80 flex-1 p-4 md:p-12 overflow-y-auto min-h-screen w-full overflow-x-hidden">
+              {/* Mobile Header */}
+              <div className="md:hidden flex items-center justify-between mb-6 border-b-2 border-gray-900 pb-4">
+                <h2 className="text-xl font-bold tracking-tighter">ENSEMBLE.AI</h2>
+                <button onClick={() => setIsMobileMenuOpen(true)} className="p-2 bg-gray-900 text-white">
+                  <Menu className="w-5 h-5" />
+                </button>
+              </div>
+
               {isProcessing ? (
                 <div className="flex flex-col items-center justify-center h-[60vh]">
                   <div className="w-16 h-16 border-4 border-gray-200 border-t-gray-900 rounded-full animate-spin mb-4"></div>
-                  <div className="font-mono font-bold animate-pulse text-lg">EXECUTING ENSEMBLE INFERENCE...</div>
+                  <div className="font-mono font-bold animate-pulse text-center text-lg">EXECUTING ENSEMBLE INFERENCE...</div>
                 </div>
               ) : activeView === "master" ? (
                 <MasterDashboard />
