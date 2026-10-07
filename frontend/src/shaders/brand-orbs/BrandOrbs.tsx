@@ -128,7 +128,7 @@ function extractOrbEngine(source: string) {
 const ORB_ENGINE = extractOrbEngine(brandOrbsSource).replace(/<\/script/gi, "<\\/script");
 
 function buildFocusedDocument(variant: BrandOrbVariant, size: BrandOrbSize, mode: Exclude<BrandOrbMode, "auto">) {
-  const background = mode === "light" ? "#dad7cc" : "#050608";
+  const background = "transparent";
   const filter = mode === "light" ? "invert(1) hue-rotate(180deg) contrast(1.04) saturate(.92)" : "none";
   const canvasSize = SIZE_PIXELS[size];
   const variantJson = JSON.stringify(variant).replace(/</g, "\\u003c");
@@ -199,7 +199,7 @@ export function BrandOrbs({
   const safeSpeed = clamp(speed, 0.1, 3);
   const effectivePaused = paused || !hostVisible || !documentVisible;
   const source = useMemo(() => buildFocusedDocument(safeVariant, safeSize, resolvedMode), [resolvedMode, safeSize, safeVariant]);
-  const background = resolvedMode === "light" ? "#dad7cc" : "#050608";
+  const background = "transparent";
 
   const postControls = useCallback(() => {
     iframeRef.current?.contentWindow?.postMessage({
@@ -242,6 +242,7 @@ export function BrandOrbs({
         height: "100%",
         border: 0,
         background,
+        pointerEvents: "none",
         ...style,
       }}
     />
