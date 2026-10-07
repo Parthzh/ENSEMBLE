@@ -6,11 +6,11 @@ import { Upload, Cpu, Network, BookOpen, Layers, BarChart, Activity, ChevronRigh
 import { CoverflowCarousel } from "@/components/ui/coverflow-carousel";
 
 const SLIDES = [
-  { src: "/model_images/knn.jpg", alt: "K-Nearest Neighbors", title: "K-Nearest Neighbors", subtitle: "Distance-based spatial voting", meta: [{ label: "Accuracy", value: "92.4%" }] },
-  { src: "/model_images/rf.jpg", alt: "Random Forest", title: "Random Forest", subtitle: "100+ parallel decision trees", meta: [{ label: "Accuracy", value: "96.8%" }] },
-  { src: "/model_images/svm.jpg", alt: "Support Vector Machine", title: "Support Vector Machine", subtitle: "RBF kernel hyperplane classification", meta: [{ label: "Accuracy", value: "98.1%" }] },
-  { src: "/model_images/cnn.jpg", alt: "Custom CNN", title: "Custom CNN (3-Block)", subtitle: "From-scratch architecture for raw pixel data", meta: [{ label: "Accuracy", value: "99.2%" }] },
-  { src: "/model_images/enet.jpg", alt: "EfficientNet-B0", title: "EfficientNet-B0", subtitle: "Pre-trained deep transfer learning", meta: [{ label: "Accuracy", value: "99.7%" }] },
+  { src: "/model_images/knn.jpg", alt: "K-Nearest Neighbors", title: "K-Nearest Neighbors", subtitle: "Maps visual data into geometric space to classify grains by multi-dimensional feature proximity.", meta: [{ label: "Accuracy", value: "92.4%" }] },
+  { src: "/model_images/rf.jpg", alt: "Random Forest", title: "Random Forest", subtitle: "Leverages an army of one hundred parallel decision trees to vote on complex spatial features.", meta: [{ label: "Accuracy", value: "96.8%" }] },
+  { src: "/model_images/svm.jpg", alt: "Support Vector Machine", title: "Support Vector Machine", subtitle: "Slices high-dimensional feature spaces with mathematical precision to find the perfect grain boundaries.", meta: [{ label: "Accuracy", value: "98.1%" }] },
+  { src: "/model_images/cnn.jpg", alt: "Custom CNN", title: "Custom CNN (3-Block)", subtitle: "Deep learning architecture extracting raw pixel hierarchies to identify microscopic surface grain patterns.", meta: [{ label: "Accuracy", value: "99.2%" }] },
+  { src: "/model_images/enet.jpg", alt: "EfficientNet-B0", title: "EfficientNet-B0", subtitle: "State-of-the-art transfer learning model dynamically scaling depth and width for maximum feature extraction.", meta: [{ label: "Accuracy", value: "99.7%" }] },
 ];
 
 // --- Types ---

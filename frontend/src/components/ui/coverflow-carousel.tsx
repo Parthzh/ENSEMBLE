@@ -335,25 +335,25 @@ export function CoverflowCarousel({
       {showCaption && active?.title && (
         <div
           key={selected}
-          className="mt-2 flex flex-col items-center px-6 duration-300 animate-in fade-in"
+          className="mt-6 flex flex-col items-center px-6 duration-300 animate-in fade-in max-w-2xl mx-auto"
         >
-          <p className="text-[15px] font-semibold tracking-tight text-foreground">
+          <p className="text-xl font-black font-mono tracking-widest text-gray-900 uppercase">
             {active.title}
           </p>
           {active.subtitle && (
-            <p className="mt-1 text-[13px] text-muted-foreground">
+            <p className="mt-3 text-[15px] font-medium text-gray-700 text-center leading-relaxed">
               {active.subtitle}
             </p>
           )}
           {active.meta && active.meta.length > 0 && (
-            <dl className="mt-10 w-full max-w-[230px] text-[12px]">
+            <div className="mt-8 mb-4 w-full flex justify-center">
               {active.meta.map((row) => (
-                <div key={row.label} className="flex justify-between py-[5px]">
-                  <dt className="text-muted-foreground">{row.label}</dt>
-                  <dd className="font-medium text-foreground">{row.value}</dd>
+                <div key={row.label} className="flex items-center gap-4 bg-gray-100 px-6 py-2 rounded-full border border-gray-200">
+                  <span className="text-sm font-bold text-gray-500 uppercase tracking-widest">{row.label}</span>
+                  <span className="text-lg font-black text-blue-600">{row.value}</span>
                 </div>
               ))}
-            </dl>
+            </div>
           )}
         </div>
       )}
