@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Upload, Cpu, Network, BookOpen, Layers, BarChart, Activity, ChevronRight, RefreshCcw, Camera, Menu, X } from "lucide-react";
 import { CoverflowCarousel } from "@/components/ui/coverflow-carousel";
+import { TopoBackground } from "@/components/ui/topo-background";
 
 const SLIDES = [
   { src: "/model_images/knn.jpg", alt: "K-Nearest Neighbors", title: "K-Nearest Neighbors", subtitle: "Maps visual data into geometric space to classify grains by multi-dimensional feature proximity.", meta: [{ label: "Accuracy", value: "92.4%" }] },
@@ -57,7 +58,7 @@ export default function Home() {
     setAsciiArt(generateAsciiPattern());
   }, [file]);
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = React.useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const uploaded = e.target.files[0];
       setFile(uploaded);
@@ -98,7 +99,7 @@ export default function Home() {
       }
       setIsProcessing(false);
     }
-  };
+  }, []);
 
   const resetSession = () => {
     setFile(null);
@@ -109,14 +110,11 @@ export default function Home() {
   };
 
   // --- Components ---
-  const WelcomeScreen = () => (
+  const WelcomeScreen = React.useMemo(() => () => (
     <motion.div 
       initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
       className="flex flex-col items-center justify-center min-h-screen p-8 relative overflow-hidden"
     >
-      {/* Background Grid Pattern */}
-      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none" 
-           style={{ backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
       
       {/* Decorative ASCII */}
       <div className="absolute top-10 left-10 text-[8px] font-mono leading-[8px] text-gray-400 opacity-50 z-0 whitespace-pre">
@@ -174,7 +172,7 @@ export default function Home() {
         </div>
       </div>
     </motion.div>
-  );
+  ), [isProcessing, errorMessage, handleFileUpload]);
 
   const Sidebar = () => (
     <motion.div 
@@ -332,9 +330,10 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#f9f9f9] text-gray-900 font-sans selection:bg-gray-900 selection:text-white">
-      {/* Global Background Pattern */}
-      <div className="fixed inset-0 z-[-1] opacity-[0.03] pointer-events-none" 
-           style={{ backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+      {/* Global Background Pattern (Grid + Topo) */}
+      <TopoBackground className="opacity-30 fixed inset-0 z-[0] pointer-events-none" />
+      <div className="fixed inset-0 z-[0] opacity-20 pointer-events-none" 
+           style={{ backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
       <AnimatePresence mode="wait">
         {!file ? (
