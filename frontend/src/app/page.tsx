@@ -74,6 +74,7 @@ export default function Home() {
         if (data.error) {
             setErrorMessage(data.error);
             setResults(null);
+            setFile(null); // Go back to welcome screen to show error
         } else {
             setResults(data);
             if (data.ascii_art) {
@@ -84,6 +85,7 @@ export default function Home() {
         console.error("Backend offline or error", err);
         setErrorMessage("The server is currently unavailable or overloaded. Please try again in a few moments.");
         setResults(null);
+        setFile(null); // Go back to welcome screen to show error
       }
       setIsProcessing(false);
     }
