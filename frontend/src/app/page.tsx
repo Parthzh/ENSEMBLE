@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Upload, Cpu, Network, BookOpen, Layers, BarChart, Activity, ChevronRight, RefreshCcw, Camera, Menu, X } from "lucide-react";
 import { CoverflowCarousel } from "@/components/ui/coverflow-carousel";
 import { TopoBackground } from "@/components/ui/topo-background";
+import { ModelDeepDive } from "@/components/ui/model-deep-dive";
 import { BrandOrbs } from "@/shaders/brand-orbs/BrandOrbs";
 import "@/shaders/threeui.css";
 
@@ -321,25 +322,7 @@ export default function Home() {
     </motion.div>
   );
 
-  const ModelDeepDive = () => (
-    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="max-w-4xl mx-auto">
-      <h1 className="text-5xl font-bold tracking-tighter mb-2">{activeView}</h1>
-      <p className="font-mono text-gray-500 uppercase tracking-widest border-b-2 border-gray-900 pb-4 mb-8">Internal Architecture Inspection</p>
-      
-      <div className="bg-white border-2 border-gray-900 p-8 shadow-[8px_8px_0px_0px_rgba(17,24,39,1)]">
-        <h3 className="font-mono font-bold mb-4 flex items-center gap-2"><BookOpen className="w-5 h-5"/> Visual Breakdown</h3>
-        <p className="text-gray-600 leading-relaxed mb-6">
-          This dedicated space will house the custom Framer Motion animations and D3 charts that explain exactly how the <strong>{activeView}</strong> model arrived at its conclusion. 
-          It will feature the full confusion matrix and interactive activation maps.
-        </p>
-        
-        {/* Placeholder for the Confusion Matrix visualization */}
-        <div className="w-full h-64 bg-gray-50 border-2 border-dashed border-gray-300 flex items-center justify-center font-mono text-gray-400">
-          [ CONFUSION MATRIX RENDER AREA ]
-        </div>
-      </div>
-    </motion.div>
-  );
+  // ModelDeepDive is imported from components/ui/model-deep-dive
 
   return (
     <div className="min-h-screen bg-[#f9f9f9] text-gray-900 font-sans selection:bg-gray-900 selection:text-white">
@@ -363,7 +346,7 @@ export default function Home() {
               />
             )}
 
-            <main className="md:ml-80 flex-1 p-4 md:p-12 overflow-y-auto min-h-screen w-full overflow-x-hidden">
+            <main className="relative z-10 md:ml-80 flex-1 p-4 md:p-12 overflow-y-auto min-h-screen w-full overflow-x-hidden">
               {/* Mobile Header */}
               <div className="md:hidden flex items-center justify-between mb-6 border-b-2 border-gray-900 pb-4">
                 <h2 className="text-xl font-bold tracking-tighter">ENSEMBLE.AI</h2>
@@ -380,7 +363,7 @@ export default function Home() {
               ) : activeView === "master" ? (
                 <MasterDashboard />
               ) : (
-                <ModelDeepDive />
+                <ModelDeepDive modelName={activeView} />
               )}
             </main>
           </div>
