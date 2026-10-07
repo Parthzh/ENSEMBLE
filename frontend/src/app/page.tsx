@@ -39,9 +39,9 @@ export default function Home() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [results, setResults] = useState<BackendResponse | null>(null);
   
-  // Navigation State
   const [activeView, setActiveView] = useState<string>("master");
   const [asciiArt, setAsciiArt] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     setAsciiArt(generateAsciiPattern());
@@ -63,26 +63,26 @@ export default function Home() {
           method: "POST",
           body: formData,
         });
+        
+        if (!res.ok) {
+            throw new Error(`Server returned ${res.status}`);
+        }
+        
         const data = await res.json();
-        setResults(data);
-        if (data.ascii_art) {
-          setAsciiArt(data.ascii_art);
+        
+        if (data.error) {
+            setErrorMessage(data.error);
+            setResults(null);
+        } else {
+            setResults(data);
+            if (data.ascii_art) {
+              setAsciiArt(data.ascii_art);
+            }
         }
       } catch (err) {
         console.error("Backend offline or error", err);
-        // Fallback mock data if backend isn't running yet
-        setResults({
-          master_prediction: "1121",
-          master_confidence: 96.2,
-          models: {
-            "knn": { prediction: "1121", confidence: 57.9 },
-            "rf": { prediction: "1121", confidence: 91.9 },
-            "svm": { prediction: "1509 - sella", confidence: 65.8 },
-            "custom_cnn": { prediction: "1121", confidence: 92.6 },
-            "efficientnet": { prediction: "1121", confidence: 76.8 }
-          },
-          extracted_features: { area: 4521, length: 120, width: 45, lw_ratio: 2.6 }
-        });
+        setErrorMessage("The server is currently unavailable or overloaded. Please try again in a few moments.");
+        setResults(null);
       }
       setIsProcessing(false);
     }
@@ -92,6 +92,7 @@ export default function Home() {
     setFile(null);
     setImageUri(null);
     setResults(null);
+    setErrorMessage(null);
     setActiveView("master");
   };
 
@@ -133,15 +134,24 @@ export default function Home() {
               <input type="file" className="hidden" accept="image/*" onChange={handleFileUpload} />
             </label>
 
-            <label className="flex-1 flex flex-col items-center justify-center h-48 border-2 border-dashed border-gray-400 hover:border-gray-900 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer group/drop">
+            <label className="flex-1 flex flex-col items-center justify-center h-48 border-2 border-dashed border-gray-400 hover:border-gray-900 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer group/drop relative overflow-hidden">
+              {isProcessing && <div className="absolute inset-0 bg-gray-900/10 flex items-center justify-center backdrop-blur-sm"><RefreshCcw className="w-8 h-8 animate-spin text-gray-900" /></div>}
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 <Camera className="w-10 h-10 mb-3 text-gray-400 group-hover/drop:text-gray-900 transition-colors" />
                 <p className="mb-2 text-sm text-gray-500 font-mono"><span className="font-semibold text-gray-900">Take Photo</span></p>
                 <p className="text-xs text-gray-500 uppercase tracking-widest">Mobile/Web Camera</p>
               </div>
-              <input type="file" className="hidden" accept="image/*" capture="environment" onChange={handleFileUpload} />
+              <input type="file" className="hidden" accept="image/*" capture="environment" onChange={handleFileUpload} disabled={isProcessing} />
             </label>
           </div>
+          
+          <AnimatePresence>
+            {errorMessage && (
+              <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="mt-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-900 font-mono text-sm">
+                <strong>[ERROR]</strong> {errorMessage}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </motion.div>
