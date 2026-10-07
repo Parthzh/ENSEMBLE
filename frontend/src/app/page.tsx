@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Upload, Cpu, Network, BookOpen, Layers, BarChart, Activity, ChevronRight, RefreshCcw, Camera, Menu, X } from "lucide-react";
 import { CoverflowCarousel } from "@/components/ui/coverflow-carousel";
 import { TopoBackground } from "@/components/ui/topo-background";
+import { BrandOrbs } from "@/shaders/brand-orbs/BrandOrbs";
+import "@/shaders/threeui.css";
 
 const SLIDES = [
   { src: "/model_images/knn.jpg", alt: "K-Nearest Neighbors", title: "K-Nearest Neighbors", subtitle: "Maps visual data into geometric space to classify grains by multi-dimensional feature proximity.", meta: [{ label: "Accuracy", value: "92.4%" }] },
@@ -119,6 +121,16 @@ export default function Home() {
       {/* Decorative ASCII */}
       <div className="absolute top-10 left-10 text-[8px] font-mono leading-[8px] text-gray-400 opacity-50 z-0 whitespace-pre">
         {`  .::.\n.::::::.\n.::::::::.\n.::::::::::.\n:::::::SYSTEM\n:::::::ONLINE`}
+      </div>
+
+      {/* Social Links (BrandOrbs) */}
+      <div className="absolute top-10 right-10 flex gap-4 z-20">
+        <a href="https://github.com/Parthzh/ENSEMBLE" target="_blank" rel="noreferrer" className="block w-14 h-14 hover:scale-110 transition-transform">
+          <BrandOrbs variant="github" size="medium" mode="light" speed={1.00} />
+        </a>
+        <a href="https://www.linkedin.com/in/parthagarwalzh/" target="_blank" rel="noreferrer" className="block w-14 h-14 hover:scale-110 transition-transform">
+          <BrandOrbs variant="linkedin" size="medium" mode="light" speed={1.00} />
+        </a>
       </div>
 
       <div className="z-10 max-w-4xl w-full">
